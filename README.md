@@ -1,20 +1,20 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
 
-# Run and deploy your AI Studio app
+# 🎮 عالم البقاء 2.5D
 
-This contains everything you need to run your app locally.
+لعبة عالم مفتوح للبقاء تركز على الزراعة، جمع الموارد، القتال، وبناء الحصون.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1ChlOPkT1isIPOD-8WMlzrdfYhXr-Iv9C
+## 🚀 كيفية الرفع على GitHub:
 
-## Run Locally
+1. قم بإنشاء مستودع (Repository) جديد على GitHub.
+2. ارفع جميع الملفات إلى المستودع.
+3. لتفعيل اللعبة على GitHub Pages:
+   - اذهب إلى **Settings** > **Pages**.
+   - اختر **GitHub Actions** كمصدر للنشر (Build and deployment).
+   - استخدم قالب "Static HTML" أو قم بعمل `npm run build` وارفع مجلد `dist` إلى فرع `gh-pages`.
 
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## ✨ المميزات المضافة:
+- **نظام بناء كامل**: بناء أسوار وبوابات لحماية مزرعتك.
+- **تفاعل ذكي**: الوحوش تهاجم الأسوار إذا لم تجد طريقاً لك.
+- **متجر ملكي**: شراء المعدات والترقيات.
+- **تحكم مخصص**: تم تبديل أزرار الحركة والأكشن لتناسب تجربة أفضل.
+- **العلامة المائية**: @kl_h5

@@ -9,7 +9,6 @@ interface GameCanvasProps {
 const GameCanvas: React.FC<GameCanvasProps> = ({ gameState }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // تحديث حجم الكانفاس عند تغيير حجم النافذة فقط وليس في كل إطار
   useEffect(() => {
     const handleResize = () => {
       if (canvasRef.current) {
@@ -35,11 +34,9 @@ const GameCanvas: React.FC<GameCanvasProps> = ({ gameState }) => {
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // الأرضية
       ctx.fillStyle = '#2d5a27';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // تفاصيل العشب (Static noise for grid effect)
       ctx.fillStyle = '#346b31';
       for (let i = 0; i < 50; i++) {
         const gx = ((i * 313) % 2000) - camX;
@@ -49,7 +46,6 @@ const GameCanvas: React.FC<GameCanvasProps> = ({ gameState }) => {
         }
       }
 
-      // ترتيب الكائنات حسب المحور Y لتأثير 2.5D
       const sortedEntities = [...entities].sort((a, b) => a.position.y - b.position.y);
       
       sortedEntities.forEach(entity => {
@@ -61,9 +57,8 @@ const GameCanvas: React.FC<GameCanvasProps> = ({ gameState }) => {
         ctx.save();
         ctx.translate(x, y);
 
-        // ظل الكائنات
         ctx.fillStyle = 'rgba(0,0,0,0.15)';
-        ctx.beginPath(); ctx.ellipse(0, 2, 12, 6, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.ellipse(0, 5, 12, 6, 0, 0, Math.PI * 2); ctx.fill();
 
         switch (entity.type) {
           case EntityType.TREE:
@@ -106,7 +101,6 @@ const GameCanvas: React.FC<GameCanvasProps> = ({ gameState }) => {
           case EntityType.MINION:
             ctx.fillStyle = '#2e7d32'; ctx.fillRect(-10, -30, 20, 30);
             ctx.fillStyle = '#ffe0b2'; ctx.beginPath(); ctx.arc(0, -38, 9, 0, Math.PI * 2); ctx.fill();
-            // تاج صغير للمساعد
             ctx.fillStyle = '#fbc02d'; ctx.fillRect(-4, -52, 8, 4);
             break;
           case EntityType.CARROT_PLANT:
@@ -115,6 +109,33 @@ const GameCanvas: React.FC<GameCanvasProps> = ({ gameState }) => {
                const size = (entity.growthStage / 100) * 12;
                ctx.fillStyle = '#fb8c00'; ctx.fillRect(-3, -size, 6, size);
                ctx.fillStyle = '#43a047'; ctx.fillRect(-5, -size - 3, 10, 4);
+            }
+            break;
+          case EntityType.WALL:
+            ctx.fillStyle = '#455a64';
+            ctx.fillRect(-20, -30, 40, 40);
+            ctx.strokeStyle = '#263238'; ctx.lineWidth = 2;
+            ctx.strokeRect(-20, -30, 40, 40);
+            // تفاصيل الطوب
+            ctx.fillStyle = '#546e7a';
+            ctx.fillRect(-15, -25, 10, 5); ctx.fillRect(5, -25, 10, 5);
+            ctx.fillRect(-15, -15, 30, 5);
+            break;
+          case EntityType.GATE:
+            ctx.fillStyle = '#455a64';
+            ctx.fillRect(-20, -40, 8, 50); // عمود أيسر
+            ctx.fillRect(12, -40, 8, 50);  // عمود أيمن
+            if (entity.isGateOpen) {
+              // بوابة مفتوحة (مرسومة جانباً)
+              ctx.fillStyle = '#5d4037';
+              ctx.fillRect(-12, -35, 4, 35); 
+              ctx.fillRect(8, -35, 4, 35);
+            } else {
+              // بوابة مغلقة
+              ctx.fillStyle = '#795548';
+              ctx.fillRect(-12, -35, 24, 35);
+              ctx.fillStyle = '#3e2723';
+              ctx.fillRect(-2, -20, 4, 4); // مقبض
             }
             break;
         }
@@ -126,7 +147,6 @@ const GameCanvas: React.FC<GameCanvasProps> = ({ gameState }) => {
         ctx.restore();
       });
 
-      // رسم اللاعب
       ctx.save();
       ctx.translate(canvas.width / 2, canvas.height / 2);
       ctx.fillStyle = 'rgba(0,0,0,0.2)';

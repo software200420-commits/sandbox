@@ -10,7 +10,7 @@ interface ShopProps {
 }
 
 const Shop: React.FC<ShopProps> = ({ player, setGameState, onClose }) => {
-  const buy = (item: keyof typeof PRICING | 'SEED' | 'HORSE' | 'SWORD' | 'ARMOR', price: number) => {
+  const buy = (item: string, price: number) => {
     if (player.gold >= price) {
       setGameState(prev => {
         const p = { ...prev.player };
@@ -18,6 +18,8 @@ const Shop: React.FC<ShopProps> = ({ player, setGameState, onClose }) => {
         if (item === 'SEED') p.inventory.seeds += 5;
         if (item === 'HORSE') p.inventory.horse = true;
         if (item === 'SWORD') p.inventory.swordLevel++;
+        if (item === 'WALL') p.inventory.walls += 5;
+        if (item === 'GATE') p.inventory.gates += 1;
         if (item === 'ARMOR') {
           p.inventory.armorLevel++;
           p.maxHealth += 50;
@@ -66,6 +68,15 @@ const Shop: React.FC<ShopProps> = ({ player, setGameState, onClose }) => {
         </div>
         
         <div className="flex-1 overflow-y-auto p-6 space-y-8 bg-[#efdcd0]">
+          {/* Building Tab */}
+          <section>
+            <h3 className="text-xl font-bold mb-4 text-[#3e2723] border-b-2 border-[#3e2723]/20 pb-2">🏗️ مواد البناء</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <ShopAction name="حزمة أسوار (x5)" price={PRICING.WALL.buy} icon="🧱" onAction={() => buy('WALL', PRICING.WALL.buy)} disabled={player.gold < PRICING.WALL.buy} />
+              <ShopAction name="بوابة حصينة" price={PRICING.GATE.buy} icon="🚪" onAction={() => buy('GATE', PRICING.GATE.buy)} disabled={player.gold < PRICING.GATE.buy} />
+            </div>
+          </section>
+
           {/* Buying Equipment */}
           <section>
             <h3 className="text-xl font-bold mb-4 text-[#3e2723] border-b-2 border-[#3e2723]/20 pb-2">⚔️ معدات قتالية</h3>
@@ -109,7 +120,7 @@ const Shop: React.FC<ShopProps> = ({ player, setGameState, onClose }) => {
             <span>رصيدك الحالي:</span>
             <span className="text-yellow-400">{player.gold} 💰</span>
           </div>
-          <div className="text-sm opacity-80">نصيحة: بَع المحاصيل لتطوير عتادك</div>
+          <div className="text-sm opacity-80">نصيحة: ابْنِ أسواراً لحماية مزرعتك</div>
         </div>
       </div>
     </div>

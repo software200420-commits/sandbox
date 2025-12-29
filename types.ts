@@ -10,7 +10,9 @@ export enum EntityType {
   MINION_CANDIDATE = 'MINION_CANDIDATE', // Potential slave
   MINION = 'MINION',
   CARROT_PLANT = 'CARROT_PLANT',
-  TILL_SPOT = 'TILL_SPOT'
+  TILL_SPOT = 'TILL_SPOT',
+  WALL = 'WALL',
+  GATE = 'GATE'
 }
 
 export enum MinionTask {
@@ -31,7 +33,7 @@ export interface Entity {
   position: Position;
   health: number;
   maxHealth: number;
-  state: 'idle' | 'moving' | 'attacking' | 'harvesting' | 'growing';
+  state: 'idle' | 'moving' | 'attacking' | 'harvesting' | 'growing' | 'open' | 'closed';
   targetPos?: Position;
   lastMoveTime: number;
   waitDuration: number;
@@ -40,6 +42,7 @@ export interface Entity {
   ownerId?: string; // For minions
   task?: MinionTask;
   speed: number;
+  isGateOpen?: boolean;
 }
 
 export interface Player {
@@ -57,6 +60,8 @@ export interface Player {
     meat: number;
     carrots: number;
     seeds: number;
+    walls: number;
+    gates: number;
     horse: boolean;
     swordLevel: number;
     armorLevel: number;

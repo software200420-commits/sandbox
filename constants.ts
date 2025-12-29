@@ -17,7 +17,9 @@ export const PRICING = {
   SEED: { buy: 5 },
   HORSE: { buy: 500 },
   SWORD: { buy: 200 },
-  ARMOR: { buy: 250 }
+  ARMOR: { buy: 250 },
+  WALL: { buy: 50 },
+  GATE: { buy: 150 }
 };
 
 export const INITIAL_PLAYER_STATS = {
