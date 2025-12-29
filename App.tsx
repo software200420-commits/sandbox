@@ -200,7 +200,6 @@ const App: React.FC = () => {
       }
 
       // Health Regeneration (Buff)
-      // تجدد الصحة 10 نقاط كل ثانيتين إذا كان الأكل > 15
       if (newPlayer.hunger > 15 && now - lastHealthRegenRef.current > 2000) {
         if (newPlayer.health < newPlayer.maxHealth) {
           newPlayer.health = Math.min(newPlayer.maxHealth, newPlayer.health + 10);
@@ -312,6 +311,16 @@ const App: React.FC = () => {
   return (
     <div className="relative w-full h-full bg-[#2d5a27] overflow-hidden select-none touch-none">
       <GameCanvas gameState={gameState} />
+
+      {/* العلامة المائية - Instagram Watermark */}
+      <div className="fixed bottom-4 left-4 z-[100] pointer-events-none select-none opacity-40 hover:opacity-100 transition-opacity">
+        <div className="flex flex-col items-start bg-black/40 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/10 shadow-lg">
+          <span className="text-[10px] text-white font-bold tracking-widest uppercase opacity-70">Creator</span>
+          <span className="text-yellow-400 text-sm font-black flex items-center gap-2">
+            📸 @kl_h5
+          </span>
+        </div>
+      </div>
 
       <TopBar 
         player={gameState.player} 
